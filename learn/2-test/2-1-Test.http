@@ -1,0 +1,80 @@
+# > {%  %} 를 가지고 테스트할 수 있습니다.
+
+### 응답값 확인
+GET https://httpbin.org/get?name=kukim
+Accept: application/json
+
+
+### 테스트 성공 케이스: 상태 코드가 200이고 args의 name이 kukim인지 확인합니다.
+GET https://httpbin.org/get?name=kukim
+Accept: application/json
+
+> {%
+
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+
+    client.test("Check Response Data", function (){
+        var body = response.body;
+        client.assert(body.args.name === "kukim",
+            "Response Body args.name is not kukim");
+
+        client.assert(body.headers.Accept === "application/json");
+    });
+
+ %}
+
+
+### 테스트 성공: js import 하여 검증하기
+GET https://httpbin.org/status/404
+Accept: application/json
+
+> 404-error.js
+
+### 테스트 실패 케이스: 상태 코드가 잘못되었습니다.
+GET https://httpbin.org/status/200
+Accept: application/json
+
+> {%
+
+    client.test("Status code is 404", function (){
+        client.assert(response.status === 404, "Response status is not 404")
+    });
+
+    client.test("Check Response Data", function (){
+        var body = response.body;
+        client.assert(body.args.name === "kukim",
+            "Response Body args.name is not kukim");
+
+        client.assert(body.headers.Accept === "application/json");
+    });
+
+%}
+
+### 검증문에서 env variable 사용하기
+GET https://httpbin.org/get?name={{name}}
+Accept: application/json
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+
+    client.test("Check Response Data", function (){
+        var body = response.body;
+        client.assert(body.args.name === request.environment.get("name"), // 변수 사용
+            "Response Body args.name is not env name");
+    });
+
+%}
+
+### Redis hmset
+RSET admin
+Host: localhost:7000
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Admin"
+}
