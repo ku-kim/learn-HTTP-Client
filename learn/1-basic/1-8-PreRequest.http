@@ -1,0 +1,20 @@
+# Pre-Request HTTP Client Request하기 이전에 실행하는 단계라고 생각하시면됩니다.
+# < {%  %} 을 통해 Pre-Request 를 사용할 수 있습니다.
+# {%  %} 안에서 JavaScript를 사용하여 응답을 처리할 수 있습니다.
+
+### pre-request를 사용하여 request 변수를 저장하여 HTTP Request에서 사용하기
+< {%
+
+// 로그 확인용
+    let requestURL = request.url.getRaw() // raw request url
+    let host = request.environment.get("host") // env 환경변수 뽑기
+    client.log("raw Request URL" + requestURL)
+    client.log("host: " + host)
+    client.log("header(Accept): " + request.headers.findByName("Accept").getRawValue())
+
+    // request 에 변수 저장하기
+    request.variables.set("var-from-pre-request-script", "value12345")
+%}
+
+GET {{host}}/get?pre-var={{var-from-pre-request-script}}
+Accept: application/json

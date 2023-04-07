@@ -1,0 +1,2 @@
+# HTTP Client가 제공하는 Dynamic Variables
+GET {{host}}/get?id={{$random.uuid}}&emai={{$random.email}}&timestam={{$isoTimestamp}}

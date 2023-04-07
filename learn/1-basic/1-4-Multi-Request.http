@@ -1,0 +1,20 @@
+# ### 3개로 HTTP Client Request를 구분합니다.
+
+GET https://httpbin.org/get
+Accept: application/json
+User-Agent: kukim-HTTPClient
+
+###
+
+GET https://httpbin.org/get?requset_val=2
+Accept: application/json
+
+###
+
+GET https://httpbin.org/get?requset_val=3
+Accept: application/json
+Accept-Language: ko-KR
+
+###
+# HTTP GET 요청은 생략할 수 있습니다.
+https://httpbin.org/get?requset_val=4

@@ -1,0 +1,9 @@
+# HTTP Client는 curl <-> HTTP Request convert를 지원합니다.
+
+# HTTP Request -> curl
+GET https://httpbin.org/get
+Accept: application/json
+User-Agent: kukim-HTTPClient
+
+# curl -> HTTP Request
+

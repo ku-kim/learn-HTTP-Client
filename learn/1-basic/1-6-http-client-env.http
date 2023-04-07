@@ -1,0 +1,5 @@
+# HTTP Client에서 사용하는 environment(이하 env)는 http-cleint.env.json 또는 rest-client.env.json 파일을 인식합니다.
+# 사용할 env를 선택합니다.
+# env에서 사용할 특정 변수를 {{variable}}로 사용합니다.
+
+GET {{host}}/get?val={{name}}

@@ -1,0 +1,17 @@
+# ### HTTP Request Title
+
+### 요청 1
+GET https://httpbin.org/get
+Accept: application/json
+User-Agent: kukim-HTTPClient
+
+### 요청 2
+# @name 두 번째 요청입니다.
+GET https://httpbin.org/get?requset_val=2
+Accept: application/json
+
+###
+# @name 세 번째 요청입니다.
+GET https://httpbin.org/get?requset_val=3
+Accept: application/json
+Accept-Language: ko-KR

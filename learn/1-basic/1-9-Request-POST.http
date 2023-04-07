@@ -1,0 +1,18 @@
+### Request Body 방법 1 {}
+
+POST https://httpbin.org/post
+Content-Type: application/json
+
+{
+    "name": "kukim",
+    "email": {{$random.email}},
+    "phone_number": "010-1234-5678",
+    "timestamp": "{{$isoTimestamp}}"
+}
+
+### Request Body 방법 2 < json
+
+POST https://httpbin.org/post
+Content-Type: application/json
+
+< body.json
