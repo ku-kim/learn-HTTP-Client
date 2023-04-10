@@ -1,20 +1,20 @@
-# 잘못된 테스트 케이스 확인용
-
-### failed 1
-GET {{host}}/status/200
-
-> {%
-    client.test("Status code is 418", function (){
-        client.assert(response.status === 418, "Response status is not 418")
-    });
-%}
-
-### failed 2
-GET {{host}}/status/-1
-
-> {%
-    client.test("Status code is 200", function (){
-        client.assert(response.status === 200, "Response status is not 200")
-    });
-%}
-
+## 잘못된 테스트 케이스 확인용
+#
+#### failed 1
+#GET {{host}}/status/200
+#
+#> {%
+#    client.test("Status code is 418", function (){
+#        client.assert(response.status === 418, "Response status is not 418")
+#    });
+#%}
+#
+#### failed 2
+#GET {{host}}/status/-1
+#
+#> {%
+#    client.test("Status code is 200", function (){
+#        client.assert(response.status === 200, "Response status is not 200")
+#    });
+#%}
+#
