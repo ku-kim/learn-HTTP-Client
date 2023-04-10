@@ -1,7 +1,7 @@
-integration-test-dev:
-	./integration-test/run-http-client.sh dev
+# make integration-test env={local||dev||qa} debug={true||false}
+# default env=local / debug=false
 
-integration-test-qa:
-	./integration-test/run-http-client.sh qa
+integration-test:
+	@cd integration-test && ./run-http-client.sh
 
-.PHONY: integration-test-local integration-test-dev integration-test-qa
+.PHONY: integration-test
