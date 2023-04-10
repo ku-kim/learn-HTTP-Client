@@ -132,3 +132,5 @@ Temporary Items
 .apdisk
 
 .idea
+
+integration-test/reports/**

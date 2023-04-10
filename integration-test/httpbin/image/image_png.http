@@ -1,0 +1,16 @@
+# /image/png api 테스트
+
+### /image/png
+GET {{host}}/image/png
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+
+    client.test("Check response header", function (){
+        client.assert(response.headers.valueOf("Content-Type") === "image/png")
+    });
+
+%}
+
