@@ -1,0 +1,20 @@
+# /status/{codes} api 테스트 (200, 201)
+
+### /status/200
+GET {{host}}/status/200
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+%}
+
+### /status/201
+GET {{host}}/status/201
+
+> {%
+    client.test("Status code is 201", function (){
+        client.assert(response.status === 201, "Response status is not 201")
+    });
+%}
+
