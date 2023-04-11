@@ -1,0 +1,65 @@
+# reference: JetBrains HTTP Client Examples
+
+### Simple WebSocket Request
+// It is possible to send messages to server right from the Services tool window
+WEBSOCKET ws://{{$exampleServer}}/ws
+
+### Request with client messages
+// It is possible to specify client messages in request body. Use '===' to separate messages.
+// Add '=== wait-for-server' above a message to send it after a server response is received.
+// To wait for N responses, add '=== wait-for-server' N times.
+WEBSOCKET ws://{{$exampleServer}}/ws
+Content-Type: application/json // We use it for highlighting
+
+===
+{
+  "message": "Hello, server!",
+  "repeat": 3
+}
+=== wait-for-server
+=== wait-for-server
+{
+  "message": "We send this message...",
+  "repeat": 0
+}
+===
+{
+  "message": "And this message together",
+  "repeat": 1
+}
+
+### Requests with scripts
+// Also, we can use scripts for sending messages to server and verifying messages from the server.
+WEBSOCKET ws://{{$exampleServer}}/ws
+Content-Type: application/json
+
+{
+  "message": "Beginning message"
+}
+
+> {%
+    var i = 0
+    response.body.onEachMessage((message, unsubscribe, output) => {
+        i++
+        const jsonMessage = JSON.parse(message); // We know that our sample server returns JSON
+        client.test("Server sent a JSON with 'message' property: " + i , () => {
+            client.assert(jsonMessage.message !== undefined)
+        });
+        if (jsonMessage.message.includes("finish")) {
+            unsubscribe() // remove current listener
+            return
+        }
+
+        if (i === 5) {
+            output(JSON.stringify({
+                message: "finish"
+            }));
+        } else {
+            output(JSON.stringify({
+                message: "Message from the script: " + i
+            }));
+        }
+    }, () => {
+        client.log("We stopped listening for WebSocket from the current 'onEachMessage' call!")
+    });
+%}

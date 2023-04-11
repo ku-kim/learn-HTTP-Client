@@ -1,0 +1,21 @@
+# gRPC
+## plugin: Protocol Buffers(https://plugins.jetbrains.com/plugin/14004-protocol-buffers)
+## plugin: gRPC(https://plugins.jetbrains.com/plugin/16889-grpc)
+## gRPC 요청 server: https://grpcb.in/
+
+### gRPC 요청
+
+GRPC grpcb.in:9000/grpcbin.GRPCBin/Index
+
+> {%
+    client.test("Check gRPC Data", function (){
+        var body = response.body;
+        client.assert(body.description === "gRPC testing server");
+        client.assert(body.endpoints[0].path === "Index");
+    });
+%}
+
+###
+
+GRPC grpcb.in:9000/grpcbin.GRPCBin/HeadersUnary
+

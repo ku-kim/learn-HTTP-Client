@@ -1,0 +1,112 @@
+# reference: JetBrains HTTP Client Examples
+
+### Request to get GraphQL Schema
+// Our server works with the following GraphQL schema
+GET http://{{$exampleServer}}/graphql
+
+>> {{$historyFolder}}/examples.graphqls
+
+### Simple Query over HTTP
+// We just write a GraphQL query in the request body
+GRAPHQL http://{{$exampleServer}}/graphql
+
+query {
+  getUser(userName: "My Favorite User") {
+    name
+    comments {
+      text
+      by
+    }
+  }
+}
+
+### Query with variables
+// To specify GraphQL variables, add JSON after a query
+GRAPHQL http://{{$exampleServer}}/graphql
+
+query retrivingComments($commentsInfix: String) {
+  getCommentsWith(text: $commentsInfix) {
+    text
+    by
+  }
+}
+
+{
+  "commentsInfix": "GraphQL in HTTP Client!"
+}
+
+### Queries over WebSocket
+// If server supports WebSocket for GraphQL, we can use it for sending requests via WebSocket
+GRAPHQL ws://{{$exampleServer}}/graphql-ws
+
+mutation creatingNewComment($text: String) {
+  newComment(userName: "JetBrains user", text: $text) {
+    by
+    text
+  }
+}
+
+{
+  "text": "GraphQL over WebSocket!"
+}
+
+### Subscriptions over WebSockets
+// WebSockets are handy for GraphQL subscriptions
+GRAPHQL ws://{{$exampleServer}}/graphql-ws
+
+subscription {
+  newComments {
+    text
+    by
+  }
+}
+
+
+### Response Scripts for GraphQL over HTTP
+GRAPHQL http://{{$exampleServer}}/graphql
+
+query retrivingRequests($commentsInfix: String) {
+  getCommentsWith(text: $commentsInfix) {
+    text
+    by
+  }
+}
+
+{
+  "commentsInfix": "Inside script!"
+}
+
+> {%
+    // In HTTP, our response is just a JSON object
+    response.body.data.getCommentsWith.forEach((comment, i) => {
+        client.test("Checking " + i, () => {
+            client.assert(comment.text.includes("Inside script!"))
+            client.assert(comment.by !== undefined)
+        })
+    })
+%}
+
+### Response Scripts for GraphQL over WebSocket
+GRAPHQL ws://{{$exampleServer}}/graphql-ws
+
+subscription {
+  newComments {
+    text
+    by
+  }
+}
+
+> {%
+    var i = 0;
+    // In WebSocket, response is a stream
+    response.body.onEachMessage((message, unsubscribe) => {
+        i++;
+        client.test("Response " + i + " contains 'text' and 'by'", () => {
+            client.assert(message.text !== undefined)
+            client.assert(message.by !== undefined)
+        });
+        if (i === 10) {
+            unsubscribe()
+        }
+    });
+%}
