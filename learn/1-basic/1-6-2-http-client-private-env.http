@@ -1,0 +1,4 @@
+# http-client.private.env.json을 인식하여 private env를 사용할 수 있습니다.
+# e.g. .gitignore에 http-client.private.env.json를 포함시켜 사용할 수 있습니다.
+
+GET {{host}}/get?val={{password}}
