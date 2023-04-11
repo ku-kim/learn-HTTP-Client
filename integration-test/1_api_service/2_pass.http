@@ -1,0 +1,19 @@
+# 순서 보장 테스트 2
+
+### 1_2_1
+GET {{host}}/get?order=1_2_1
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+%}
+
+### 1_2_2
+GET {{host}}/get?order=1_2_2
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+%}

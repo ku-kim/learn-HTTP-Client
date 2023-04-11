@@ -1,0 +1,40 @@
+# 순서 보장 테스트 1
+
+### 1_1_1
+GET {{host}}/get?order=1_1_1
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+%}
+
+### 1_1_2
+GET {{host}}/get?order=1_1_2
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+%}
+
+### 1_1_3: Setup auth_token
+POST https://httpbin.org/post
+Content-Type: application/json
+
+{
+  "token": "setup 1_1_3 auth_token"
+}
+
+> {% client.global.set("auth_token", response.body.json.token); %}
+
+### 1_1_4: 1_1_3에서 추가한 env 사용하기
+GET https://httpbin.org/headers
+Authorization: Bearer {{auth_token}}
+
+> {%
+    client.test("Check auth_token", function () {
+        client.assert(response.body.headers.Authorization === "Bearer setup 1_1_3 auth_token", "Response Authorization is not 1_1_3 auth_token")
+    });
+%}
+

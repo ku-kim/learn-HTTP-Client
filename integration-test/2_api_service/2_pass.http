@@ -1,0 +1,29 @@
+# 순서 보장 테스트 2
+
+### 2_2_1
+GET {{host}}/get?order=2_2_1
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+%}
+
+### 2_2_2
+GET {{host}}/get?order=2_2_2
+
+> {%
+    client.test("Status code is 200", function (){
+        client.assert(response.status === 200, "Response status is not 200")
+    });
+%}
+
+### 2_2_3: 1_1_3에서 추가한 env 사용 테스트
+GET https://httpbin.org/headers
+Authorization: Bearer {{auth_token}}
+
+> {%
+    client.test("Check auth_token", function () {
+        client.assert(response.body.headers.Authorization === "Bearer setup 1_1_3 auth_token", "Response Authorization is not 1_1_3 auth_token")
+    });
+%}

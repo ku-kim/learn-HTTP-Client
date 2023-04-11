@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @Author: @Kukim
+# @Author: @ku-kim
 #=================================================================
 
 RED="\033[1;31m"
@@ -22,9 +22,12 @@ run_http_client_test() {
     fi
 
     echo -e "Running tests for environment: ${RED}${BOLD}$env${RESET}, log_level: ${RED}${BOLD}$log_level${RESET}"
+    # sort -z: *.http 파일/폴더들 문자열 오름차순
     find "$PWD" -name "*.http" -print0 \
+        | sort -z \
         | sed "s|$PWD|/workdir|g" \
-        | xargs -0 docker run --rm -i -v "$PWD":/workdir -w /workdir/ jetbrains/intellij-http-client \
+        | xargs -0 \
+        docker run --rm -i -v "$PWD":/workdir -w /workdir/ jetbrains/intellij-http-client \
         -r \
         $use_debug_option \
         -L "$log_level" \
