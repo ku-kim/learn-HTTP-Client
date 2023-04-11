@@ -1,0 +1,11 @@
+# live template 사용 가능
+# mptr
+
+POST https://httpbin.org/post
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="first"; filename="input.txt"
+
+< input.txt
+--WebAppBoundary--

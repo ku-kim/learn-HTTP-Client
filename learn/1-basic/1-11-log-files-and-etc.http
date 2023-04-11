@@ -1,0 +1,30 @@
+# HTTP Client는 Request, Response, Cookie에 대해 Log를 저장하고 있습니다.
+# path: ./idea/httpRequests/*
+# <> 로 로그를 접근할 수 있습니다.
+# no-log로 로그 저장을 막을 수 있습니다.
+
+GET https://httpbin.org/get
+Accept: application/json
+User-Agent: kukim-HTTPClient
+
+#<> 2023-04-11T142339.200.json
+
+###
+
+# @name 로그 남지 않음
+# @no-log
+GET https://httpbin.org/get
+Accept: application/json
+User-Agent: kukim-HTTPClient
+
+
+### Redirections 요청
+# 해당 요청은 리다이렉트 됨
+# -> https://httpbin.org/redirect/1
+#-> https://httpbin.org/get
+GET https://httpbin.org/status/301
+
+### Redirections 요청 방지
+# @no-redirect
+GET https://httpbin.org/status/301
+
